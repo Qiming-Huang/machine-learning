@@ -41,7 +41,7 @@ img_means = []
 for i in range(10):
     img_means.append(np.mean(x_train[y_train == i], axis=0))
 
-# gradient ascent to update the nosie image
+# gradient ascent to update the nosie image, method 1
 for epoch in range(1000):
     logits_prototype = model(X_prototype)
     loss = lambda: tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits_prototype, labels=Y_prototype)) \
@@ -49,6 +49,21 @@ for epoch in range(1000):
     opt = tf.keras.optimizers.SGD(lr=0.1)
     opt.minimize(loss, var_list=[X_prototype])
     print("this is %d epoch, the loss is %f" % (epoch, loss()))
+    
+# method 2 using the Automatic derivation in tensorflow
+# def run():
+#     with tf.GradientTape() as tape:
+#         logits_prototype = model(X_prototype)
+#         loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits_prototype, labels=Y_prototype)) \
+#                        + lmda * tf.nn.l2_loss(X_prototype - img_means)
+
+#     gradients = tape.gradient(loss, [X_prototype])            # X_prototype has to be included by two Brackets!!!!
+#     optimizer.apply_gradients(zip(gradients, [X_prototype]))  # X_prototype has to be included by two Brackets!!!!
+#     print(loss)
+
+# for i in range(5000):
+#     run()
+#     print("this is %d epoch" % (i))
 
 # plot and save the activation maximization images
 fig, axs = plt.subplots(2, 5)
