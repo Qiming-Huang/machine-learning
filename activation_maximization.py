@@ -1,5 +1,6 @@
 """
 the implementation of Activation Maximization:
+    given a pre-trained model, find the maximum respone for the model.
 """
 
 import tensorflow as tf
@@ -35,10 +36,12 @@ lmda = 0.1
 # plt.savefig('b.jpg')
 # plt.show()
 
+# find the means for each class
 img_means = []
 for i in range(10):
     img_means.append(np.mean(x_train[y_train == i], axis=0))
 
+# gradient ascent to update the nosie image
 for epoch in range(1000):
     logits_prototype = model(X_prototype)
     loss = lambda: tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits_prototype, labels=Y_prototype)) \
