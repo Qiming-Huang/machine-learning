@@ -3,7 +3,7 @@
 some projects about machine learning and deep learning
 
 Done
-- [x] implement activation maximization
+- [x] (implement activation maximization)[https://github.com/Thomaszz4/machine-learning/blob/main/activation_maximization.py]
 
 To-Do List
 
