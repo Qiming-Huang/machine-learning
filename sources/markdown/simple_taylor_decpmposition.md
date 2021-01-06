@@ -8,7 +8,7 @@ it is used to calculate the relevance of each pixel, give a explanation of neura
 * traing the model without biases
 * the relevance score is calculated by X * (the Partial derivatives of X with respect to logistic)
 
-### [code]()
+### [code](https://github.com/Thomaszz4/machine-learning/blob/main/simple_taylor_decpmposition.py)
 
 ### result
-[]()
+![result](http://image.thomaszz4.cn/imagesimple_taylor_decomposition_result.jpg)
