@@ -5,13 +5,25 @@ from tensorflow.keras.layers import Input, Dense, Flatten
 import matplotlib.pyplot as plt
 
 class Simple_Tayplor_Decomposition():
+    """
+    implementation of simple taylor decomposition
+    """
     def __init__(self, model_path, data_path):
+        """
+        initialization of some variables
+        :param model_path: pre-trained model path (.h5)
+        :param data_path: file path of data set (mnist.npz)
+        """
         self.data = np.load(data_path)
         self.model = load_model(model_path)
         self.x_train, self.y_train = self.data['x_train'] / 255, self.data['y_train']
         self.X = tf.Variable(self.get_sample_img(), dtype=tf.float32)
 
     def get_sample_img(self):
+        """
+        get one image for each number
+        :return: list
+        """
         sample_img = []
         for i in range(10):
             img = self.x_train[self.y_train == i]
@@ -20,6 +32,11 @@ class Simple_Tayplor_Decomposition():
         return sample_img
 
     def show(self, save=False):
+        """
+        show the result after simple taylor decomposition
+        :param save: weather save the plot image
+        :return: none
+        """
         with tf.GradientTape() as tape:
             Y = self.model(self.X)
 
@@ -38,6 +55,13 @@ class Simple_Tayplor_Decomposition():
         plt.show()
 
     def train(self, epochs=3, batch_size=32, save=False):
+        """
+        train the model, note, relu is used as the activation function and without biases
+        :param epochs: training epochs, default 3
+        :param batch_size: batch_size, default 32
+        :param save: weather save the model
+        :return: none
+        """
         x = Input(shape=(28, 28, 1))
 
         net = Flatten()(x)
@@ -63,3 +87,4 @@ if __name__ == '__main__':
     std = Simple_Tayplor_Decomposition(model_path, data_path)
     std.show(save=False)
     std.train(save=False)
+
